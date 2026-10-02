@@ -1,32 +1,42 @@
 import type { Metadata } from "next";
-import { Syne, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Unbounded, DM_Sans, Arimo, EB_Garamond } from "next/font/google";
 import "./globals.css";
 
-const syne = Syne({
-  variable: "--font-syne",
+const unbounded = Unbounded({
+  variable: "--font-unbounded",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const arimo = Arimo({
+  variable: "--font-arimo",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const ebGaramond = EB_Garamond({
+  variable: "--font-garamond",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "MONARK — We Build Braaaaands. That's It.",
+  title: "MONARK — Brand Consultancy",
   description:
-    "Monark is an elite brand consultancy that defines what a business stands for, gives it a distinctive identity, and brings it to life across every touchpoint.",
+    "We define what a business stands for and brings it to life. Brand strategy, identity, creative & digital.",
   icons: {
     icon: "/icon.png",
     shortcut: "/favicon.ico",
@@ -42,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} dark scroll-smooth`}
+      className={`${unbounded.variable} ${dmSans.variable} ${arimo.variable} ${ebGaramond.variable} dark scroll-smooth`}
     >
       <body className="min-h-screen bg-[#050505] text-[#FAFAFA] antialiased selection:bg-[#FFD004] selection:text-black">
         {children}

@@ -8,7 +8,6 @@ import { LogoGrid } from "@/components/brand/LogoGrid";
 import { ColorTokens } from "@/components/brand/ColorTokens";
 import { TypographyScale } from "@/components/brand/TypographyScale";
 import { ComponentShowcase } from "@/components/brand/ComponentShowcase";
-import { MagneticCursor } from "@/components/ui/MagneticCursor";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { ArrowLeft, ArrowUpRight, Download, Check, Sparkles } from "lucide-react";
 
@@ -38,8 +37,6 @@ export default function BrandGuidelinesPage() {
   return (
     <SmoothScroll>
       <div className="min-h-screen bg-[#050505] text-[#FAFAFA] relative selection:bg-[#FFD004] selection:text-black">
-        <MagneticCursor />
-
         {/* Technical Top Bar */}
         <header className="sticky top-0 z-40 bg-[#050505]/85 backdrop-blur-xl border-b border-white/10 px-6 md:px-12 py-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between">

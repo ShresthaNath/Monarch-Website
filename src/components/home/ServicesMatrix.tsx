@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import { ArrowRight, Check, Compass, Eye, Sparkles, Monitor, X } from "lucide-react";
@@ -31,7 +31,7 @@ const SERVICES: ServiceItem[] = [
     ],
     description:
       "We strip away the noise to discover the undeniable core of your enterprise. Through rigorous competitor analysis, customer psychology audits, and positioning frameworks, we identify the exact battleground where you dominate.",
-    timeline: "3 — 5 Weeks",
+    timeline: "3 ΓÇö 5 Weeks",
   },
   {
     id: "identity",
@@ -49,7 +49,7 @@ const SERVICES: ServiceItem[] = [
     ],
     description:
       "A sovereign visual signature forged to stand the test of decades. We sculpt custom emblems, mathematical typography hierarchies, bespoke color palettes, and comprehensive brand guidelines books that ensure uncompromised coherence.",
-    timeline: "4 — 6 Weeks",
+    timeline: "4 ΓÇö 6 Weeks",
   },
   {
     id: "creative",
@@ -86,7 +86,7 @@ const SERVICES: ServiceItem[] = [
     ],
     description:
       "Bringing the brand to life across digital viewports with 60fps kinetic craft. We engineer bespoke Next.js and Three.js platforms, intuitive interface systems, interactive brand guidelines portals, and physical architectural touchpoints.",
-    timeline: "6 — 10 Weeks",
+    timeline: "6 ΓÇö 10 Weeks",
   },
 ];
 
@@ -121,7 +121,7 @@ export function ServicesMatrix({ onOpenContactWithService }: ServicesMatrixProps
           <div>
             <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
               <span className="w-2 h-2 rounded-full bg-[#FFD004]" />
-              <span className="text-white font-bold">04 — SERVICES</span>
+              <span className="text-white font-bold">04 ΓÇö SERVICES</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-black font-display tracking-tight text-white uppercase mt-2">
               PICK YOUR BATTLE.
@@ -196,7 +196,7 @@ export function ServicesMatrix({ onOpenContactWithService }: ServicesMatrixProps
                     onClick={() => setActiveModal(service)}
                     className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-widest text-white group-hover:text-[#FFD004] transition-colors"
                   >
-                    <span>[ EXPLORE → ]</span>
+                    <span>[ EXPLORE ΓåÆ ]</span>
                   </button>
 
                   <button
@@ -228,7 +228,7 @@ export function ServicesMatrix({ onOpenContactWithService }: ServicesMatrixProps
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-xs font-mono text-[#FFD004]">
                 <span>{activeModal.number} // DEEP DIVE</span>
-                <span>•</span>
+                <span>ΓÇó</span>
                 <span>TIMELINE: {activeModal.timeline}</span>
               </div>
               <h3 className="text-3xl font-black font-display text-white">

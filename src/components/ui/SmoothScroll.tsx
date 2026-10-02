@@ -1,13 +1,20 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null);
+
   useEffect(() => {
-    // Only initialize smooth scroll on non-touch or large viewports for optimal 60-120fps performance
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
@@ -15,19 +22,27 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       wheelMultiplier: 1,
       touchMultiplier: 1.5,
     });
+    lenisRef.current = lenis;
 
-    let animationFrameId: number;
+    lenis.on("scroll", ScrollTrigger.update);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    }
+    const updateTicker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
 
-    animationFrameId = requestAnimationFrame(raf);
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
+
+    // Refresh ScrollTrigger after fonts/images settle
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      clearTimeout(refreshTimer);
+      gsap.ticker.remove(updateTicker);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 

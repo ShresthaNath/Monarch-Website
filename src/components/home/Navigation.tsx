@@ -1,143 +1,145 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { MonarkLogo } from "@/components/brand/MonarkLogo";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import React, { useState } from "react";
+import Image from "next/image";
+import { X } from "lucide-react";
 
 interface NavigationProps {
-  onOpenContact: () => void;
+  onBookCall?: () => void;
+  className?: string;
 }
 
-export function Navigation({ onOpenContact }: NavigationProps) {
-  const [scrolled, setScrolled] = useState(false);
+export function Navigation({ onBookCall, className = "" }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const scrollTo = (id: string) => {
+    setMobileMenuOpen(false);
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleBookCall = onBookCall || (() => scrollTo("final-cta"));
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-        scrolled
-          ? "bg-[#050505]/90 backdrop-blur-xl border-b border-white/10 py-3.5 shadow-2xl"
-          : "bg-transparent py-6 border-b border-white/5"
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-zinc-950/85 border-b border-zinc-800/40 select-none transition-all ${className}`}
+      data-name="Fixed global navigation"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="w-full max-w-[1352px] h-[72px] lg:h-[80px] mx-auto flex items-center justify-between px-4 sm:px-8">
         
-        {/* Logo Lockup */}
-        <Link href="/" className="group flex items-center gap-3 select-none">
-          <div className="relative rounded-full overflow-hidden transition-transform duration-300 group-hover:scale-105">
-            <MonarkLogo variant="badge" size={38} priority />
+        {/* Brand: Monogram + Brand Name (Figma 571:947 Desktop & 571:1153 Mobile) */}
+        <div
+          onClick={() => {
+            setMobileMenuOpen(false);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="flex items-center gap-2.5 sm:gap-3 shrink-0 cursor-pointer"
+        >
+          {/* Authentic Crown Monogram Vector (w: 24.1px, h: 33.8px) */}
+          <div className="w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] rounded-full flex items-center justify-center shrink-0">
+            <div className="w-[24.1px] h-[33.8px] relative shrink-0">
+              <Image
+                src="/assets/monogram.svg"
+                alt="Monark Monogram"
+                width={24}
+                height={34}
+                priority
+                className="object-contain"
+              />
+            </div>
           </div>
-          <div className="flex flex-col">
-            <span className="font-display font-black tracking-wider text-white text-base leading-none uppercase">
+
+          <div className="flex flex-col text-[#F7F7F2] leading-none whitespace-nowrap">
+            <span className="font-unbounded font-bold text-[16px] sm:text-[18px] tracking-[-0.54px]">
               MONARK
             </span>
-            <span className="font-mono text-[9px] tracking-[0.25em] text-[#FFD004] uppercase mt-0.5">
-              CONSULTANCY
+            <span className="font-arimo font-normal text-[6.4px] sm:text-[7.4px] tracking-[1.19px] opacity-60 mt-1 uppercase text-[#F7F7F2]">
+              BRAND CONSULTANCY
             </span>
           </div>
-        </Link>
+        </div>
 
-        {/* Desktop Nav Anchors */}
-        <nav className="hidden md:flex items-center gap-8 font-mono text-xs text-neutral-400">
-          <a href="#branding-hook" className="hover:text-white transition-colors">
-            01 / HOOK
-          </a>
-          <a href="#intro" className="hover:text-white transition-colors">
-            02 / ETHOS
-          </a>
-          <a href="#services" className="hover:text-white transition-colors">
-            03 / SERVICES
-          </a>
-          <a href="#process" className="hover:text-white transition-colors">
-            04 / PROCESS
-          </a>
-          <Link
-            href="/brand-guidelines"
-            className="flex items-center gap-1 text-[#FFD004] hover:text-white transition-colors"
-          >
-            BRAND SYSTEM <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-        </nav>
+        {/* Desktop Navigation Links & Action (Figma 571:960) */}
+        <div className="hidden md:flex items-center gap-7 lg:gap-8">
+          <div className="flex items-center gap-7 text-[#F7F7F2]">
+            <button
+              onClick={() => scrollTo("services")}
+              className="font-arimo font-bold text-[12px] tracking-[0.96px] uppercase hover:text-[#F5C518] transition-colors cursor-pointer"
+            >
+              OUR SERVICES
+            </button>
+            <button
+              onClick={() => scrollTo("process")}
+              className="font-arimo font-bold text-[12px] tracking-[0.96px] uppercase hover:text-[#F5C518] transition-colors cursor-pointer"
+            >
+              HOW WE WORK
+            </button>
+            <button
+              onClick={() => scrollTo("final-cta")}
+              className="font-arimo font-bold text-[12px] tracking-[0.96px] uppercase hover:text-[#F5C518] transition-colors cursor-pointer"
+            >
+              ABOUT US
+            </button>
+          </div>
 
-        {/* Action Button */}
-        <div className="hidden sm:flex items-center gap-4">
           <button
-            onClick={onOpenContact}
-            className="relative px-5 py-2.5 bg-[#FFD004] hover:bg-white text-black font-semibold text-xs uppercase tracking-wider transition-all duration-300 active:scale-95 flex items-center gap-2"
+            onClick={handleBookCall}
+            className="h-[42px] px-[20px] rounded-full bg-[#F5C518] border border-[#F5C518] text-[#1D1D1D] font-arimo font-bold text-[11px] tracking-[1.1px] uppercase hover:bg-[#FFD004] transition-all cursor-pointer whitespace-nowrap shadow-sm hover:scale-105"
           >
-            <span>Start A Conversation</span>
-            <span className="font-mono">→</span>
+            Book a Call
           </button>
         </div>
 
-        {/* Mobile Hamburger */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-white hover:text-[#FFD004] transition-colors"
-          aria-label="Toggle Navigation Menu"
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        {/* Mobile Navigation Tools (Figma Node 571:1165 / 573:106: Book a Call + 2-Line Menu) */}
+        <div className="md:hidden flex items-center gap-2">
+          {/* Mobile "Book a Call" Pill Button */}
+          <button
+            onClick={handleBookCall}
+            className="bg-[#F5C518] h-[38px] px-3.5 rounded-full flex items-center justify-center text-[#1D1D1D] font-arimo font-bold text-[9px] tracking-[0.81px] uppercase whitespace-nowrap shadow-sm"
+          >
+            Book a Call
+          </button>
+
+          {/* Minimalist 2-Line Hamburger Menu */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="w-[42px] h-[42px] flex flex-col items-center justify-center gap-[5px] text-[#F7F7F2] cursor-pointer"
+            aria-label="Toggle Mobile Menu"
+          >
+            {mobileMenuOpen ? (
+              <X size={20} className="text-[#F5C518]" />
+            ) : (
+              <>
+                <span className="bg-[#F7F7F2] h-[1.5px] w-[18px] rounded-full" />
+                <span className="bg-[#F7F7F2] h-[1.5px] w-[18px] rounded-full" />
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Drawer Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#070709] border-b border-white/10 px-6 py-8 space-y-6">
-          <nav className="flex flex-col space-y-4 font-mono text-sm text-neutral-300">
-            <a
-              href="#branding-hook"
-              onClick={() => setMobileMenuOpen(false)}
-              className="hover:text-[#FFD004] transition-colors"
-            >
-              01 / HOOK
-            </a>
-            <a
-              href="#intro"
-              onClick={() => setMobileMenuOpen(false)}
-              className="hover:text-[#FFD004] transition-colors"
-            >
-              02 / ETHOS
-            </a>
-            <a
-              href="#services"
-              onClick={() => setMobileMenuOpen(false)}
-              className="hover:text-[#FFD004] transition-colors"
-            >
-              03 / SERVICES
-            </a>
-            <a
-              href="#process"
-              onClick={() => setMobileMenuOpen(false)}
-              className="hover:text-[#FFD004] transition-colors"
-            >
-              04 / PROCESS
-            </a>
-            <Link
-              href="/brand-guidelines"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[#FFD004] flex items-center gap-1"
-            >
-              BRAND SYSTEM (v1.0) <ArrowUpRight className="w-4 h-4" />
-            </Link>
-          </nav>
-
+        <div className="md:hidden w-full bg-[#050505]/95 backdrop-blur-xl border-b border-zinc-800 px-6 py-6 flex flex-col gap-4 animate-in slide-in-from-top-2 duration-200">
           <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenContact();
-            }}
-            className="w-full py-3.5 bg-[#FFD004] text-black font-semibold text-xs uppercase tracking-wider text-center"
+            onClick={() => scrollTo("services")}
+            className="font-unbounded font-bold text-[14px] text-left text-white hover:text-[#F5C518] transition-colors py-2 border-b border-zinc-900"
           >
-            Start A Conversation →
+            OUR SERVICES
+          </button>
+          <button
+            onClick={() => scrollTo("process")}
+            className="font-unbounded font-bold text-[14px] text-left text-white hover:text-[#F5C518] transition-colors py-2 border-b border-zinc-900"
+          >
+            HOW WE WORK
+          </button>
+          <button
+            onClick={() => scrollTo("final-cta")}
+            className="font-unbounded font-bold text-[14px] text-left text-white hover:text-[#F5C518] transition-colors py-2"
+          >
+            ABOUT US
           </button>
         </div>
       )}
